@@ -10,6 +10,5 @@
         android:id="@+id/ivImage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerInParent="true"
-        android:src="@color/colorAccent" />
+        android:layout_centerInParent="true" />
 </RelativeLayout>

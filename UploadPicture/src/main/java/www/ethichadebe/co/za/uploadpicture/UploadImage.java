@@ -31,7 +31,7 @@ import com.yalantis.ucrop.UCrop;
 import java.io.File;
 import java.io.IOException;
 
-class UploadImage extends Activity {
+public class UploadImage extends Activity {
     //constants
     public static final int CAMERA_PERMISSION = 123;
     public static final int STORAGE_PERMISSION = 1234;
