@@ -253,6 +253,7 @@ public class UploadImage extends Activity {
 
     /**
      * Paste Paste method in onRequestPermissionsResult
+     *
      * @param requestCode
      * @param grantResults
      */
@@ -270,12 +271,13 @@ public class UploadImage extends Activity {
     /**
      * Paste Paste method in onActivityResult
      *
+     * @param file        getCacheDir()
      * @param ivImage     image
      * @param requestCode requestCode
      * @param resultCode  resultCode
      * @param data        data
      */
-    public void onActivityResult(ImageView ivImage, int requestCode, int resultCode, @Nullable Intent data) {
+    public void onActivityResult(File file, ImageView ivImage, int requestCode, int resultCode, @Nullable Intent data) {
         Uri uri;
         //civProfilePicture.
         if ((requestCode == STORAGE_PERMISSION) && (resultCode == RESULT_OK)) {
@@ -283,13 +285,13 @@ public class UploadImage extends Activity {
             uri = data.getData();
             if (uri != null) {
                 Log.d(TAG, "onActivityResult: data.getData() != null");
-                startCrop(getCacheDir(), uri);
+                startCrop(file, uri);
             }
         } else if ((requestCode == CAMERA_PERMISSION) && (resultCode == RESULT_OK)) {
             Log.d(TAG, "onActivityResult: (requestCode == CAMERA_PERMISSION) && (resultCode == RESULT_OK)");
             if (BitmapFactory.decodeFile(pathToFile) != null) {
                 Log.d(TAG, "onActivityResult: BitmapFactory.decodeFile(pathToFile) != null");
-                startCrop(getCacheDir(), Uri.fromFile(new File(pathToFile)));
+                startCrop(file, Uri.fromFile(new File(pathToFile)));
             }
         } else if ((requestCode == UCrop.REQUEST_CROP) && (resultCode == RESULT_OK)) {
             Log.d(TAG, "onActivityResult: (requestCode == UCrop.REQUEST_CROP) && (resultCode == RESULT_OK)");
