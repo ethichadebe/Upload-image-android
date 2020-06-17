@@ -40,11 +40,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        // onActivityResult(this, TAG, ivImage, pathToFile, requestCode, resultCode, data);
+        uploadImage.onActivityResult(ivImage, requestCode, resultCode, data);
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        //onRequestPermissionsResult(TAG, requestCode, grantResults);
+        uploadImage.onRequestPermissionsResult(requestCode, grantResults);
     }
 }

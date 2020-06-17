@@ -252,6 +252,57 @@ public class UploadImage extends Activity {
     }
 
     /**
+     * Paste Paste method in onRequestPermissionsResult
+     * @param requestCode
+     * @param grantResults
+     */
+    public void onRequestPermissionsResult(int requestCode, @NonNull int[] grantResults) {
+        if ((requestCode == STORAGE_PERMISSION) && ((grantResults.length) > 0) &&
+                grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            startActivityForResult(new Intent().setAction(Intent.ACTION_GET_CONTENT).setType("image/*"),
+                    STORAGE_PERMISSION);
+        } else if ((requestCode == CAMERA_PERMISSION) && ((grantResults.length) > 0) &&
+                grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            takePicture();
+        }
+    }
+
+    /**
+     * Paste Paste method in onActivityResult
+     *
+     * @param ivImage     image
+     * @param requestCode requestCode
+     * @param resultCode  resultCode
+     * @param data        data
+     */
+    public void onActivityResult(ImageView ivImage, int requestCode, int resultCode, @Nullable Intent data) {
+        Uri uri;
+        //civProfilePicture.
+        if ((requestCode == STORAGE_PERMISSION) && (resultCode == RESULT_OK)) {
+            Log.d(TAG, "onActivityResult: (requestCode == STORAGE_PERMISSION) && (resultCode == RESULT_OK)");
+            uri = data.getData();
+            if (uri != null) {
+                Log.d(TAG, "onActivityResult: data.getData() != null");
+                startCrop(getCacheDir(), uri);
+            }
+        } else if ((requestCode == CAMERA_PERMISSION) && (resultCode == RESULT_OK)) {
+            Log.d(TAG, "onActivityResult: (requestCode == CAMERA_PERMISSION) && (resultCode == RESULT_OK)");
+            if (BitmapFactory.decodeFile(pathToFile) != null) {
+                Log.d(TAG, "onActivityResult: BitmapFactory.decodeFile(pathToFile) != null");
+                startCrop(getCacheDir(), Uri.fromFile(new File(pathToFile)));
+            }
+        } else if ((requestCode == UCrop.REQUEST_CROP) && (resultCode == RESULT_OK)) {
+            Log.d(TAG, "onActivityResult: (requestCode == UCrop.REQUEST_CROP) && (resultCode == RESULT_OK)");
+            uri = UCrop.getOutput(data);
+            if (uri != null) {
+                Log.d(TAG, "onActivityResult: uri != null");
+                ivImage.setImageDrawable(null);
+                ivImage.setImageURI(uri);
+            }
+        }
+    }
+
+    /**
      * Open camera activity
      */
     private void takePicture() {
@@ -351,41 +402,6 @@ public class UploadImage extends Activity {
     }
 
     /**
-     * Paste Paste method in onActivityResult
-     *
-     * @param ivImage     image
-     * @param requestCode requestCode
-     * @param resultCode  resultCode
-     * @param data        data
-     */
-    public void onActivityResult(ImageView ivImage, int requestCode, int resultCode, @Nullable Intent data) {
-        Uri uri;
-        //civProfilePicture.
-        if ((requestCode == STORAGE_PERMISSION) && (resultCode == RESULT_OK)) {
-            Log.d(TAG, "onActivityResult: (requestCode == STORAGE_PERMISSION) && (resultCode == RESULT_OK)");
-            uri = data.getData();
-            if (uri != null) {
-                Log.d(TAG, "onActivityResult: data.getData() != null");
-                startCrop(getCacheDir(), uri);
-            }
-        } else if ((requestCode == CAMERA_PERMISSION) && (resultCode == RESULT_OK)) {
-            Log.d(TAG, "onActivityResult: (requestCode == CAMERA_PERMISSION) && (resultCode == RESULT_OK)");
-            if (BitmapFactory.decodeFile(pathToFile) != null) {
-                Log.d(TAG, "onActivityResult: BitmapFactory.decodeFile(pathToFile) != null");
-                startCrop(getCacheDir(), Uri.fromFile(new File(pathToFile)));
-            }
-        } else if ((requestCode == UCrop.REQUEST_CROP) && (resultCode == RESULT_OK)) {
-            Log.d(TAG, "onActivityResult: (requestCode == UCrop.REQUEST_CROP) && (resultCode == RESULT_OK)");
-            uri = UCrop.getOutput(data);
-            if (uri != null) {
-                Log.d(TAG, "onActivityResult: uri != null");
-                ivImage.setImageDrawable(null);
-                ivImage.setImageURI(uri);
-            }
-        }
-    }
-
-    /**
      * Start cropping activity
      *
      * @param file file
@@ -415,14 +431,4 @@ public class UploadImage extends Activity {
         return options;
     }
 
-    private void onRequestPermissionsResult(int requestCode, @NonNull int[] grantResults) {
-        if ((requestCode == STORAGE_PERMISSION) && ((grantResults.length) > 0) &&
-                grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            startActivityForResult(new Intent().setAction(Intent.ACTION_GET_CONTENT).setType("image/*"),
-                    STORAGE_PERMISSION);
-        } else if ((requestCode == CAMERA_PERMISSION) && ((grantResults.length) > 0) &&
-                grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            takePicture();
-        }
-    }
 }
