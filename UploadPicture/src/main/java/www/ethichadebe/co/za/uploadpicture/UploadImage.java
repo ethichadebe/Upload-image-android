@@ -51,6 +51,8 @@ public class UploadImage extends Activity {
     private PackageManager packageManager;
     private String packageName;
     private String TAG;
+    private Dialog myDialog;
+    private ImageView ivImage;
 
     public UploadImage(final Activity activity, final Context context, final PackageManager packageManager,
                        final Dialog myDialog, final ImageView ivImage, final String packageName, final String TAG) {
@@ -59,6 +61,14 @@ public class UploadImage extends Activity {
         this.packageManager = packageManager;
         this.packageName = packageName;
         this.TAG = TAG;
+        this.myDialog = myDialog;
+        this.ivImage = ivImage;
+    }
+
+    /**
+     * Open popup dialog
+     */
+    public void start() {
         myDialog.setContentView(R.layout.popup_dialog);
 
         //Initialise variables
