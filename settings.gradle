@@ -1,0 +1,3 @@
+include ':UploadPicture'
+include ':app'
+rootProject.name = "Picture chooser and cropper"
