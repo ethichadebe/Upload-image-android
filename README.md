@@ -8,7 +8,7 @@
 
 #### Check this [project on Dribbble](https://dribbble.com/shots/2484752-uCrop-Image-Cropping-Library)
 
-<img src="preview.jpg" width="100" height="400">
+<img src="preview.jpg" width="200" height="400">
 
 # Usage
 
