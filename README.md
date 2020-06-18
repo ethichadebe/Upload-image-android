@@ -45,7 +45,7 @@ implementation 'com.github.ethichadebe:Upload-image-android:1.1.0'
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 ```
 
-3.2 Inside Application, add provider. In android:authorities write package name
+3.2 Inside Application, add provider. In ```android:authorities``` write package name
 ```xml
     <provider
         android:authorities="my_package"
