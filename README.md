@@ -58,7 +58,7 @@ implementation 'com.github.ethichadebe:Upload-image-android:1.1.0'
     </provider>
 ```
 
-3. Example Activity.
+4. Example Activity.
 
 ```java
 
