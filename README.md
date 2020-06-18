@@ -8,7 +8,7 @@
 
 #### Check this [project on Dribbble](https://dribbble.com/shots/2484752-uCrop-Image-Cropping-Library)
 
-<img src="preview.jpg" width="800" height="600">
+<img src="preview.jpg" width="600" height="800">
 
 # Usage
 
@@ -74,15 +74,16 @@ implementation 'com.github.ethichadebe:Upload-image-android:1.1.0'
 
         ivImage = findViewById(R.id.ivImage);
         myDialog = new Dialog(this);
-
         uploadImage = new UploadImage(this, this, getPackageManager(), myDialog, ivImage,
                 "www.ethichadebe.co.za.picturechooserandcropper", TAG);
+
         ivImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                uploadImage.start();
+                uploadImage.start(); //OnClick envoke popup
             }
         });
+        
     }
 
     @Override
