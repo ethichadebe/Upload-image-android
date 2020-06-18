@@ -38,14 +38,14 @@ implementation 'com.github.ethichadebe:Upload-image-android:1.1.0'
 
 3. AndroidManifest.xml
 
-	* Add permissions
+* Add permissions
 ```xml
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 ```
-.
-	* Inside Application, add provider. In ```android:authorities``` write package name
+
+* Inside Application, add provider. In ```android:authorities``` write package name
 ```xml
     <provider
         android:authorities="my_package"
