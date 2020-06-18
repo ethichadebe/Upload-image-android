@@ -31,7 +31,7 @@ import com.yalantis.ucrop.UCrop;
 import java.io.File;
 import java.io.IOException;
 
-public class UploadImage extends Activity {
+public class UploadImage extends AppCompatActivity {
     //constants
     public static final int CAMERA_PERMISSION = 123;
     public static final int STORAGE_PERMISSION = 1234;
@@ -54,7 +54,7 @@ public class UploadImage extends Activity {
     private Dialog myDialog;
     private ImageView ivImage;
 
-    public UploadImage(final Activity activity, final Context context, final PackageManager packageManager,
+    public UploadImage(final Activity activity, final Context context, PackageManager packageManager,
                        final Dialog myDialog, final ImageView ivImage, final String packageName, final String TAG) {
         this.activity = activity;
         this.context = context;
@@ -254,8 +254,8 @@ public class UploadImage extends Activity {
     /**
      * Paste Paste method in onRequestPermissionsResult
      *
-     * @param requestCode
-     * @param grantResults
+     * @param requestCode requestCode
+     * @param grantResults grantResults
      */
     public void onRequestPermissionsResult(int requestCode, @NonNull int[] grantResults) {
         if ((requestCode == STORAGE_PERMISSION) && ((grantResults.length) > 0) &&
@@ -272,14 +272,12 @@ public class UploadImage extends Activity {
      * Paste Paste method in onActivityResult
      *
      * @param file        getCacheDir()
-     * @param ivImage     image
      * @param requestCode requestCode
      * @param resultCode  resultCode
      * @param data        data
      */
-    public void onActivityResult(File file, ImageView ivImage, int requestCode, int resultCode, @Nullable Intent data) {
+    public void onActivityResult(File file, int requestCode, int resultCode, @Nullable Intent data) {
         Uri uri;
-        //civProfilePicture.
         if ((requestCode == STORAGE_PERMISSION) && (resultCode == RESULT_OK)) {
             Log.d(TAG, "onActivityResult: (requestCode == STORAGE_PERMISSION) && (resultCode == RESULT_OK)");
             uri = data.getData();
@@ -323,7 +321,7 @@ public class UploadImage extends Activity {
                         photo);
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
                 Log.d(TAG, "takePicture: Start picture taking activity");
-                startActivityForResult(intent, CAMERA_PERMISSION);
+                activity.startActivityForResult(intent, CAMERA_PERMISSION);
             }
         }
     }
@@ -412,8 +410,8 @@ public class UploadImage extends Activity {
     private void startCrop(File file, @NonNull Uri uri) {
         Log.d(TAG, "startCrop: Start crop");
         UCrop uCrop = UCrop.of(uri, Uri.fromFile(new File(file, "SampleCropImg.jpg")));
-        uCrop.withAspectRatio(width, height)
-                .withMaxResultSize(width, height)
+        uCrop.withAspectRatio(width*1000, height*1000)
+                .withMaxResultSize(width*1000, height*1000)
                 .withOptions(getOptions())
                 .start(activity);
     }

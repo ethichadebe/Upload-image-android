@@ -16,7 +16,6 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private ImageView ivImage;
     private Dialog myDialog;
-    private String pathToFile = "";
     private UploadImage uploadImage;
 
     @Override
@@ -27,8 +26,8 @@ public class MainActivity extends AppCompatActivity {
         ivImage = findViewById(R.id.ivImage);
         myDialog = new Dialog(this);
 
-        uploadImage = new UploadImage(this,this,getPackageManager(),myDialog,ivImage,
-                "www.ethichadebe.co.za.uploadpicture.UploadImage",TAG);
+        uploadImage = new UploadImage(this, this, getPackageManager(), myDialog, ivImage,
+                "www.ethichadebe.co.za.picturechooserandcropper", TAG);
         ivImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -40,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        uploadImage.onActivityResult(ivImage, requestCode, resultCode, data);
+        uploadImage.onActivityResult(getCacheDir(), requestCode, resultCode, data);
     }
 
     @Override
