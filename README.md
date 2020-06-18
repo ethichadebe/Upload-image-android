@@ -4,9 +4,7 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/42eb7b00b93645c0812c045ab26cb3b7)](https://www.codacy.com/app/dvg4000/circle-menu-android?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Ramotion/circle-menu-android&amp;utm_campaign=Badge_Grade)
 [![Donate](https://img.shields.io/badge/Version-1.1.0-blue.svg)](https://paypal.me/Ramotion)
 
-#### With the help of [Yalantis cropping library](https://yalantis.com/?utm_source=github), This library aims to provide the easiest way to choose, crop and display image in android studio. It also handles permmisions requests.
-
-#### Check this [project on Dribbble](https://dribbble.com/shots/2484752-uCrop-Image-Cropping-Library)
+#### With the help of [Yalantis](https://yalantis.com/?utm_source=github) cropping library, This library aims to provide the easiest way to choose, crop and display image in android studio. It also handles permmisions requests.
 
 <img src="preview.jpg" width="200" height="400">
 
