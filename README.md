@@ -8,7 +8,7 @@
 
 #### Check this [project on Dribbble](https://dribbble.com/shots/2484752-uCrop-Image-Cropping-Library)
 
-<img src="preview.jpg" width="600" height="800">
+<img src="preview.jpg" width="100" height="400">
 
 # Usage
 
@@ -83,7 +83,7 @@ implementation 'com.github.ethichadebe:Upload-image-android:1.1.0'
                 uploadImage.start(); //OnClick envoke popup
             }
         });
-        
+
     }
 
     @Override
