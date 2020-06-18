@@ -58,9 +58,25 @@ implementation 'com.github.ethichadebe:Upload-image-android:1.1.0'
     </provider>
 ```
 
-3. Inside Activity.
+3. Example Activity.
 
 ```java
+
+package www.ethichadebe.co.za.picturechooserandcropper;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.app.Dialog;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
+
+import www.ethichadebe.co.za.uploadpicture.UploadImage;
+
+public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private ImageView ivImage;
     private Dialog myDialog;
@@ -73,16 +89,15 @@ implementation 'com.github.ethichadebe:Upload-image-android:1.1.0'
 
         ivImage = findViewById(R.id.ivImage);
         myDialog = new Dialog(this);
+
         uploadImage = new UploadImage(this, this, getPackageManager(), myDialog, ivImage,
                 "www.ethichadebe.co.za.picturechooserandcropper", TAG);
-
         ivImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                uploadImage.start(); //OnClick envoke popup
+                uploadImage.start();
             }
         });
-
     }
 
     @Override
@@ -95,13 +110,63 @@ implementation 'com.github.ethichadebe:Upload-image-android:1.1.0'
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         uploadImage.onRequestPermissionsResult(requestCode, grantResults);
     }
-```
-5. You may want to add this to your PROGUARD config:
+}
 
 ```
--dontwarn com.yalantis.ucrop**
--keep class com.yalantis.ucrop** { *; }
--keep interface com.yalantis.ucrop** { *; }
+
+## Other useful methods 
+```java
+
+    @return get path to image
+    String getPathToFile()
+
+    @return get image width and aspect ratio
+    int getWidth()
+
+    @param width image width and aspect ratio
+    void setWidth(int width)
+
+    @return get image height and aspect ratio
+    int getHeight()
+
+    @param height set image height and aspect ratio
+    void setHeight(int height)
+
+    Change the displayed text in the popup heading
+    @param text Takes string for heading
+    void setHeadingText(String text)
+
+    @return text in Heading TextView
+    String getHeadingText()
+
+    Change the displayed text in the popup message
+    @param text Takes string for message
+    void setMessageText(String text)
+
+    @return text in message TextView
+    String getMessageText()
+
+    Change the displayed text in the popup "open gallery" option
+    @param text Takes string for "open gallery" option
+    public void setGalleryText(String text)
+
+    @return text in "open gallery" TextView
+    String getGalleryText()
+
+    Change the displayed text in the popup "open camera" option
+    @param text Takes string for "open camera" option
+    void setCameraText(String text)
+
+    @return text in "open camera" TextView
+    String getCameraText()
+
+    Change the displayed text in the popup "remove image" option
+    @param text Takes string for "remove image" option
+    void setRemoveText(String text)
+
+    @return text in "remove image" TextView
+    String getRemoveText()
+
 ```
 
 ## License
