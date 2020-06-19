@@ -2,7 +2,7 @@
 
 [![Developer](https://img.shields.io/badge/Developer%20Website-Ethic%20Hadebe-green.svg)](http://ethichadebe.cf/?i=1)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/42eb7b00b93645c0812c045ab26cb3b7)](https://www.codacy.com/app/dvg4000/circle-menu-android?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Ramotion/circle-menu-android&amp;utm_campaign=Badge_Grade)
-[![Donate](https://img.shields.io/badge/Version-1.1.0-blue.svg)](https://paypal.me/Ramotion)
+[![Donate](https://img.shields.io/badge/Version-1.1.1-blue.svg)](https://paypal.me/Ramotion)
 
 #### With the help of [Yalantis](https://yalantis.com/?utm_source=github) cropping library, This library aims to provide the easiest way to choose, crop and display a single image or an array of images in android studio. It also handles permmisions requests.
 
