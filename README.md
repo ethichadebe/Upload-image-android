@@ -6,7 +6,7 @@
 
 #### With the help of [Yalantis](https://yalantis.com/?utm_source=github) cropping library, This library aims to provide the easiest way to choose, crop and display image in android studio. It also handles permmisions requests.
 
-<img src="preview.jpg" width="200" height="400">
+<img src="preview.gif" width="200" height="400">
 
 # Usage
 
