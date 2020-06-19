@@ -12,8 +12,8 @@ import android.widget.ImageView;
 
 import www.ethichadebe.co.za.uploadpicture.UploadImage;
 
-public class MainActivity extends AppCompatActivity {
-    private static final String TAG = "MainActivity";
+public class SingleImageExampleActivity extends AppCompatActivity {
+    private static final String TAG = "SingleImageExampleActivity";
     private ImageView ivImage;
     private Dialog myDialog;
     private UploadImage uploadImage;
@@ -21,13 +21,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_single_image_example);
 
         ivImage = findViewById(R.id.ivImage);
         myDialog = new Dialog(this);
 
+        //Instantiate Upload image class
         uploadImage = new UploadImage(this, this, getPackageManager(), myDialog, ivImage,
                 "www.ethichadebe.co.za.picturechooserandcropper", TAG);
+
         ivImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -45,5 +47,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         uploadImage.onRequestPermissionsResult(requestCode, grantResults);
+    }
+
+    public void changeActivity(View view) {
+        startActivity(new Intent(this, ImageArrayExampleActivity.class));
     }
 }

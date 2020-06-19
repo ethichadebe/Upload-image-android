@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
+
+        <LinearLayout
+            android:id="@+id/llImage1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Image 1"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:id="@+id/ivImage1"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@color/remove_Picture_color" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llImage2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_toEndOf="@id/llImage1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Image 2"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:id="@+id/ivImage2"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@color/colorAccent" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llImage3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/llImage1"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Image 3"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:id="@+id/ivImage3"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@color/colorPrimary" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llImage4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/llImage2"
+            android:layout_margin="10dp"
+            android:layout_toEndOf="@id/llImage1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Image 4"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:id="@+id/ivImage4"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@color/colorPrimaryDark" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:onClick="changeActivity"
+        android:text="Open Singe image activity" />
+</RelativeLayout>

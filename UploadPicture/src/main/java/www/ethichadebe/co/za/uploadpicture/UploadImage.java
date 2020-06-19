@@ -54,6 +54,19 @@ public class UploadImage extends AppCompatActivity {
     private Dialog myDialog;
     private ImageView ivImage;
 
+    private ImageView[] ivImageArr;
+
+    /**
+     * Single picture constructor
+     *
+     * @param activity       Activity
+     * @param context        Context
+     * @param packageManager getPackageManager()
+     * @param myDialog       Dialog
+     * @param ivImage        ImageView
+     * @param packageName    e.g "www.ethichadebe.co.za.uploadpicture"
+     * @param TAG            String
+     */
     public UploadImage(final Activity activity, final Context context, PackageManager packageManager,
                        final Dialog myDialog, final ImageView ivImage, final String packageName, final String TAG) {
         this.activity = activity;
@@ -66,7 +79,29 @@ public class UploadImage extends AppCompatActivity {
     }
 
     /**
-     * Open popup dialog
+     * Single picture constructor
+     *
+     * @param activity       Activity
+     * @param context        Context
+     * @param packageManager getPackageManager()
+     * @param myDialog       Dialog
+     * @param ivImageArr     ImageView[]
+     * @param packageName    e.g "www.ethichadebe.co.za.uploadpicture"
+     * @param TAG            String
+     */
+    public UploadImage(final Activity activity, final Context context, PackageManager packageManager,
+                       final Dialog myDialog, final ImageView[] ivImageArr, final String packageName, final String TAG) {
+        this.activity = activity;
+        this.context = context;
+        this.packageManager = packageManager;
+        this.packageName = packageName;
+        this.TAG = TAG;
+        this.myDialog = myDialog;
+        this.ivImageArr = ivImageArr;
+    }
+
+    /**
+     * Open popup dialog for single image
      */
     public void start() {
         myDialog.setContentView(R.layout.popup_dialog);
@@ -90,6 +125,79 @@ public class UploadImage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 ivImage.setImageDrawable(null);
+                myDialog.dismiss();
+            }
+        });
+
+        tvCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                myDialog.dismiss();
+            }
+        });
+
+        tvCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (ContextCompat.checkSelfPermission(context,
+                        Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                    Log.d(TAG, "tvCamera onClick: Take picture");
+                    takePicture();
+                } else {
+                    Log.d(TAG, "tvCamera onClick: Request permissions");
+                    requestPermission(CAMERA_PERMISSION);
+                }
+                myDialog.dismiss();
+            }
+        });
+
+        tvGallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) ==
+                        PackageManager.PERMISSION_GRANTED) {
+                    activity.startActivityForResult(new Intent().setAction(Intent.ACTION_GET_CONTENT)
+                            .setType("image/*"), STORAGE_PERMISSION);
+                } else {
+                    requestPermission(STORAGE_PERMISSION);
+                }
+                myDialog.dismiss();
+            }
+        });
+
+        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        myDialog.show();
+        myDialog.setCancelable(false);
+        myDialog.setCanceledOnTouchOutside(false);
+    }
+
+    /**
+     * Open popup dialog for image array
+     *
+     * @param index image index
+     */
+    public void start(final int index) {
+        myDialog.setContentView(R.layout.popup_dialog);
+
+        //Initialise variables
+        TextView tvCancel = myDialog.findViewById(R.id.tvCancel);
+        tvHeading = myDialog.findViewById(R.id.tvHeading);
+        tvMessage = myDialog.findViewById(R.id.tvMessage);
+        tvCamera = myDialog.findViewById(R.id.tvCamera);
+        tvGallery = myDialog.findViewById(R.id.tvGallery);
+        tvRemove = myDialog.findViewById(R.id.tvRemove);
+
+        //Display "remove picture" option when there's an image
+        if (ivImageArr[index].getDrawable() != null) {
+            tvRemove.setVisibility(View.VISIBLE);
+        } else {
+            tvRemove.setVisibility(View.GONE);
+        }
+
+        tvRemove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ivImageArr[index].setImageDrawable(null);
                 myDialog.dismiss();
             }
         });
@@ -254,7 +362,7 @@ public class UploadImage extends AppCompatActivity {
     /**
      * Paste Paste method in onRequestPermissionsResult
      *
-     * @param requestCode requestCode
+     * @param requestCode  requestCode
      * @param grantResults grantResults
      */
     public void onRequestPermissionsResult(int requestCode, @NonNull int[] grantResults) {
@@ -269,7 +377,7 @@ public class UploadImage extends AppCompatActivity {
     }
 
     /**
-     * Paste Paste method in onActivityResult
+     * Paste Paste method in onActivityResult for single image
      *
      * @param file        getCacheDir()
      * @param requestCode requestCode
@@ -298,6 +406,41 @@ public class UploadImage extends AppCompatActivity {
                 Log.d(TAG, "onActivityResult: uri != null");
                 ivImage.setImageDrawable(null);
                 ivImage.setImageURI(uri);
+            }
+        }
+    }
+
+    /**
+     * Paste Paste method in onActivityResult for image Array
+     *
+     * @param file        getCacheDir()
+     * @param requestCode requestCode
+     * @param resultCode  resultCode
+     * @param data        data
+     * @param index       image index
+     */
+    public void onActivityResult(File file, int requestCode, int resultCode, @Nullable Intent data, int index) {
+        Uri uri;
+        if ((requestCode == STORAGE_PERMISSION) && (resultCode == RESULT_OK)) {
+            Log.d(TAG, "onActivityResult: (requestCode == STORAGE_PERMISSION) && (resultCode == RESULT_OK)");
+            uri = data.getData();
+            if (uri != null) {
+                Log.d(TAG, "onActivityResult: data.getData() != null");
+                startCrop(file, uri);
+            }
+        } else if ((requestCode == CAMERA_PERMISSION) && (resultCode == RESULT_OK)) {
+            Log.d(TAG, "onActivityResult: (requestCode == CAMERA_PERMISSION) && (resultCode == RESULT_OK)");
+            if (BitmapFactory.decodeFile(pathToFile) != null) {
+                Log.d(TAG, "onActivityResult: BitmapFactory.decodeFile(pathToFile) != null");
+                startCrop(file, Uri.fromFile(new File(pathToFile)));
+            }
+        } else if ((requestCode == UCrop.REQUEST_CROP) && (resultCode == RESULT_OK)) {
+            Log.d(TAG, "onActivityResult: (requestCode == UCrop.REQUEST_CROP) && (resultCode == RESULT_OK)");
+            uri = UCrop.getOutput(data);
+            if (uri != null) {
+                Log.d(TAG, "onActivityResult: uri != null");
+                ivImageArr[index].setImageDrawable(null);
+                ivImageArr[index].setImageURI(uri);
             }
         }
     }
@@ -410,8 +553,8 @@ public class UploadImage extends AppCompatActivity {
     private void startCrop(File file, @NonNull Uri uri) {
         Log.d(TAG, "startCrop: Start crop");
         UCrop uCrop = UCrop.of(uri, Uri.fromFile(new File(file, "SampleCropImg.jpg")));
-        uCrop.withAspectRatio(width*1000, height*1000)
-                .withMaxResultSize(width*1000, height*1000)
+        uCrop.withAspectRatio(width * 1000, height * 1000)
+                .withMaxResultSize(width * 1000, height * 1000)
                 .withOptions(getOptions())
                 .start(activity);
     }
