@@ -114,61 +114,6 @@ public class MainActivity extends AppCompatActivity {
 
 ```
 
-## Other useful methods 
-```java
-
-    @return get path to image
-    String getPathToFile()
-
-    @return get image width and aspect ratio
-    int getWidth()
-
-    @param width image width and aspect ratio
-    void setWidth(int width)
-
-    @return get image height and aspect ratio
-    int getHeight()
-
-    @param height set image height and aspect ratio
-    void setHeight(int height)
-
-    Change the displayed text in the popup heading
-    @param text Takes string for heading
-    void setHeadingText(String text)
-
-    @return text in Heading TextView
-    String getHeadingText()
-
-    Change the displayed text in the popup message
-    @param text Takes string for message
-    void setMessageText(String text)
-
-    @return text in message TextView
-    String getMessageText()
-
-    Change the displayed text in the popup "open gallery" option
-    @param text Takes string for "open gallery" option
-    public void setGalleryText(String text)
-
-    @return text in "open gallery" TextView
-    String getGalleryText()
-
-    Change the displayed text in the popup "open camera" option
-    @param text Takes string for "open camera" option
-    void setCameraText(String text)
-
-    @return text in "open camera" TextView
-    String getCameraText()
-
-    Change the displayed text in the popup "remove image" option
-    @param text Takes string for "remove image" option
-    void setRemoveText(String text)
-
-    @return text in "remove image" TextView
-    String getRemoveText()
-
-```
-
 ## License
 
 Copyright 2017, Yalantis
