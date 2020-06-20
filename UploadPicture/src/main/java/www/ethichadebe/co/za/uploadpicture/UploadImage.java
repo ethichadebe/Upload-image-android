@@ -33,28 +33,27 @@ import java.io.IOException;
 
 public class UploadImage extends AppCompatActivity {
     //constants
-    public static final int CAMERA_PERMISSION = 123;
-    public static final int STORAGE_PERMISSION = 1234;
-
-    //UI variables
-    private TextView tvHeading;
-    private TextView tvMessage;
-    private TextView tvCamera;
-    private TextView tvGallery;
-    private TextView tvRemove;
-
-    private String pathToFile;
-    private int width = 1;//width image width and x value for aspect ration
-    private int height = 1;//height image height and y value for aspect ration
+    public static final int CAMERA_PERMISSION = 123, STORAGE_PERMISSION = 1234;
     private Activity activity;
     private Context context;
     private PackageManager packageManager;
-    private String packageName;
-    private String TAG;
+    private String packageName, TAG;
     private Dialog myDialog;
+
+    //Single image
+    private String pathToFile;
+    private int width = 1, height = 1;//image width and x value for aspect ration, image height and y value for aspect ration
     private ImageView ivImage;
 
+    //UI variables
+    private TextView tvHeading, tvMessage, tvCamera, tvGallery, tvRemove;
+
+    //Image array
     private ImageView[] ivImageArr;
+    private String[] pathToFileArr;
+    private int[] widthArr, heightArr;//image width and x value for aspect ration, image height and y value for aspect ration
+    //UI variables
+    private TextView[] tvHeadingArr, tvMessageArr, tvCameraArr, tvGalleryArr, tvRemoveArr;
 
     /**
      * Single picture constructor
@@ -98,6 +97,18 @@ public class UploadImage extends AppCompatActivity {
         this.TAG = TAG;
         this.myDialog = myDialog;
         this.ivImageArr = ivImageArr;
+        this.pathToFileArr = new String[ivImageArr.length];
+        this.widthArr = new int[ivImageArr.length];
+        this.heightArr = new int[ivImageArr.length];
+        this.tvCameraArr = new TextView[ivImageArr.length];
+        this.tvGalleryArr = new TextView[ivImageArr.length];
+        this.tvHeadingArr = new TextView[ivImageArr.length];
+        this.tvMessageArr = new TextView[ivImageArr.length];
+        this.tvRemoveArr = new TextView[ivImageArr.length];
+        for (int i = 0; i < ivImageArr.length; i++) {
+            widthArr[i] = 1;
+            heightArr[i] = 1;
+        }
     }
 
     /**
@@ -215,7 +226,7 @@ public class UploadImage extends AppCompatActivity {
                 if (ContextCompat.checkSelfPermission(context,
                         Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
                     Log.d(TAG, "tvCamera onClick: Take picture");
-                    takePicture();
+                    takePicture(index);
                 } else {
                     Log.d(TAG, "tvCamera onClick: Request permissions");
                     requestPermission(CAMERA_PERMISSION);
@@ -252,10 +263,64 @@ public class UploadImage extends AppCompatActivity {
     }
 
     /**
+     * @param index index
+     * @return get path to image Array
+     */
+    public String getPathToFile(int index) {
+        return pathToFileArr[index];
+    }
+
+    /**
+     * @return image width and height. width = getWidthHeight()[0] and height = getWidthHeight()[1]
+     */
+    public int[] getWidthHeight() {
+        return new int[]{width, height};
+    }
+
+    /**
+     * @param index index
+     * @return image width and height. width = getWidthHeight(index)[0] and height = getWidthHeight(index)[1]
+     */
+    public int[] getWidthHeight(int index) {
+        return new int[]{widthArr[index], heightArr[index]};
+    }
+
+    /**
+     * set image width and height
+     *
+     * @param width  width
+     * @param height height
+     */
+    public void setWidthHeight(int width, int height) {
+        this.width = width;
+        this.height = height;
+    }
+
+    /**
+     * set image width and height
+     *
+     * @param width  width
+     * @param height height
+     * @param index  index
+     */
+    public void setWidthHeight(int width, int height, int index) {
+        this.widthArr[index] = width;
+        this.heightArr[index] = height;
+    }
+
+    /**
      * @return get image width and aspect ratio
      */
     public int getWidth() {
         return width;
+    }
+
+    /**
+     * @param index index
+     * @return get image width and aspect ratio
+     */
+    public int getWidth(int index) {
+        return widthArr[index];
     }
 
     /**
@@ -266,6 +331,14 @@ public class UploadImage extends AppCompatActivity {
     }
 
     /**
+     * @param width image width and aspect ratio
+     * @param index index
+     */
+    public void setWidth(int width, int index) {
+        this.widthArr[index] = width;
+    }
+
+    /**
      * @return get image height and aspect ratio
      */
     public int getHeight() {
@@ -273,10 +346,26 @@ public class UploadImage extends AppCompatActivity {
     }
 
     /**
+     * @param index index
+     * @return get image height and aspect ratio
+     */
+    public int getHeight(int index) {
+        return heightArr[index];
+    }
+
+    /**
      * @param height set image height and aspect ratio
      */
     public void setHeight(int height) {
         this.height = height;
+    }
+
+    /**
+     * @param height set image height and aspect ratio
+     * @param index  index
+     */
+    public void setHeight(int height, int index) {
+        this.heightArr[index] = height;
     }
 
     /**
@@ -289,10 +378,28 @@ public class UploadImage extends AppCompatActivity {
     }
 
     /**
+     * Change the displayed text in the popup heading
+     *
+     * @param text  Takes string for heading
+     * @param index index
+     */
+    public void setHeadingText(String text, int index) {
+        tvHeadingArr[index].setText(text);
+    }
+
+    /**
      * @return text in Heading TextView
      */
     public String getHeadingText() {
         return tvHeading.getText().toString();
+    }
+
+    /**
+     * @param index index
+     * @return text in Heading TextView
+     */
+    public String getHeadingText(int index) {
+        return tvHeadingArr[index].getText().toString();
     }
 
     /**
@@ -305,10 +412,28 @@ public class UploadImage extends AppCompatActivity {
     }
 
     /**
+     * Change the displayed text in the popup message
+     *
+     * @param text  Takes string for message
+     * @param index index
+     */
+    public void setMessageText(String text, int index) {
+        tvMessageArr[index].setText(text);
+    }
+
+    /**
      * @return text in message TextView
      */
     public String getMessageText() {
         return tvMessage.getText().toString();
+    }
+
+    /**
+     * @param index index
+     * @return text in message TextView
+     */
+    public String getMessageText(int index) {
+        return tvMessageArr[index].getText().toString();
     }
 
     /**
@@ -321,10 +446,28 @@ public class UploadImage extends AppCompatActivity {
     }
 
     /**
+     * Change the displayed text in the popup "open gallery" option
+     *
+     * @param text  Takes string for "open gallery" option
+     * @param index index
+     */
+    public void setGalleryText(String text, int index) {
+        tvGalleryArr[index].setText(text);
+    }
+
+    /**
      * @return text in "open gallery" TextView
      */
     public String getGalleryText() {
         return tvGallery.getText().toString();
+    }
+
+    /**
+     * @param index index
+     * @return text in "open gallery" TextView
+     */
+    public String getGalleryText(int index) {
+        return tvGalleryArr[index].getText().toString();
     }
 
     /**
@@ -337,10 +480,29 @@ public class UploadImage extends AppCompatActivity {
     }
 
     /**
+     * Change the displayed text in the popup "open camera" option
+     *
+     * @param text Takes string for "open camera" option
+     * @param index index
+     */
+    public void setCameraText(String text, int index) {
+        tvCameraArr[index].setText(text);
+    }
+
+    /**
      * @return text in "open camera" TextView
      */
     public String getCameraText() {
         return tvCamera.getText().toString();
+    }
+
+    /**
+     *
+     * @param index index
+     * @return text in "open camera" TextView
+     */
+    public String getCameraText(int index) {
+        return tvCameraArr[index].getText().toString();
     }
 
     /**
@@ -353,10 +515,29 @@ public class UploadImage extends AppCompatActivity {
     }
 
     /**
+     * Change the displayed text in the popup "remove image" option
+     *
+     * @param text Takes string for "remove image" option
+     * @param index index
+     */
+    public void setRemoveText(String text, int index) {
+        tvRemoveArr[index].setText(text);
+    }
+
+    /**
      * @return text in "remove image" TextView
      */
     public String getRemoveText() {
         return tvRemove.getText().toString();
+    }
+
+    /**
+     *
+     * @param index index
+     * @return text in "remove image" TextView
+     */
+    public String getRemoveText(int index) {
+        return tvRemoveArr[index].getText().toString();
     }
 
     /**
@@ -373,6 +554,24 @@ public class UploadImage extends AppCompatActivity {
         } else if ((requestCode == CAMERA_PERMISSION) && ((grantResults.length) > 0) &&
                 grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             takePicture();
+        }
+    }
+
+    /**
+     * Paste Paste method in onRequestPermissionsResult
+     *
+     * @param requestCode  requestCode
+     * @param grantResults grantResults
+     * @param index index
+     */
+    public void onRequestPermissionsResult(int requestCode, @NonNull int[] grantResults, int index) {
+        if ((requestCode == STORAGE_PERMISSION) && ((grantResults.length) > 0) &&
+                grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            startActivityForResult(new Intent().setAction(Intent.ACTION_GET_CONTENT).setType("image/*"),
+                    STORAGE_PERMISSION);
+        } else if ((requestCode == CAMERA_PERMISSION) && ((grantResults.length) > 0) &&
+                grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            takePicture(index);
         }
     }
 
@@ -426,13 +625,13 @@ public class UploadImage extends AppCompatActivity {
             uri = data.getData();
             if (uri != null) {
                 Log.d(TAG, "onActivityResult: data.getData() != null");
-                startCrop(file, uri);
+                startCrop(file, uri, index);
             }
         } else if ((requestCode == CAMERA_PERMISSION) && (resultCode == RESULT_OK)) {
             Log.d(TAG, "onActivityResult: (requestCode == CAMERA_PERMISSION) && (resultCode == RESULT_OK)");
-            if (BitmapFactory.decodeFile(pathToFile) != null) {
+            if (BitmapFactory.decodeFile(pathToFileArr[index]) != null) {
                 Log.d(TAG, "onActivityResult: BitmapFactory.decodeFile(pathToFile) != null");
-                startCrop(file, Uri.fromFile(new File(pathToFile)));
+                startCrop(file, Uri.fromFile(new File(pathToFileArr[index])), index);
             }
         } else if ((requestCode == UCrop.REQUEST_CROP) && (resultCode == RESULT_OK)) {
             Log.d(TAG, "onActivityResult: (requestCode == UCrop.REQUEST_CROP) && (resultCode == RESULT_OK)");
@@ -460,6 +659,31 @@ public class UploadImage extends AppCompatActivity {
             //Save picture into the photo var
             if (photo != null) {
                 pathToFile = photo.getAbsolutePath();
+                Uri photoUri = FileProvider.getUriForFile(context, packageName,
+                        photo);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+                Log.d(TAG, "takePicture: Start picture taking activity");
+                activity.startActivityForResult(intent, CAMERA_PERMISSION);
+            }
+        }
+    }
+
+    /**
+     * Open camera activity
+     * @param index index
+     */
+    private void takePicture(int index) {
+        Log.d(TAG, "takePicture: Taking picture");
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        //Check if there's an app available to take picture
+        if (intent.resolveActivity(packageManager) != null) {
+            Log.d(TAG, "takePicture: getPackageManager()) != null");
+            File photo;
+            photo = createFile();
+            //Save picture into the photo var
+            if (photo != null) {
+                pathToFileArr[index] = photo.getAbsolutePath();
                 Uri photoUri = FileProvider.getUriForFile(context, packageName,
                         photo);
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
@@ -555,6 +779,22 @@ public class UploadImage extends AppCompatActivity {
         UCrop uCrop = UCrop.of(uri, Uri.fromFile(new File(file, "SampleCropImg.jpg")));
         uCrop.withAspectRatio(width * 1000, height * 1000)
                 .withMaxResultSize(width * 1000, height * 1000)
+                .withOptions(getOptions())
+                .start(activity);
+    }
+
+    /**
+     * Start cropping activity
+     *
+     * @param file file
+     * @param uri  image uri
+     * @param index index
+     */
+    private void startCrop(File file, @NonNull Uri uri, int index) {
+        Log.d(TAG, "startCrop: Start crop");
+        UCrop uCrop = UCrop.of(uri, Uri.fromFile(new File(file, "SampleCropImg.jpg")));
+        uCrop.withAspectRatio(widthArr[index] * 1000, heightArr[index] * 1000)
+                .withMaxResultSize(widthArr[index] * 1000, heightArr[index] * 1000)
                 .withOptions(getOptions())
                 .start(activity);
     }
