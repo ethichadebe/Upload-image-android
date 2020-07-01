@@ -16,6 +16,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -33,7 +34,7 @@ import java.io.IOException;
 
 public class UploadImage extends AppCompatActivity {
     //constants
-    public static final int CAMERA_PERMISSION = 123, STORAGE_PERMISSION = 1234;
+    public static final int CAMERA_PERMISSION = 12323, STORAGE_PERMISSION = 1243234;
     private Activity activity;
     private Context context;
     private PackageManager packageManager;
@@ -44,16 +45,17 @@ public class UploadImage extends AppCompatActivity {
     private String pathToFile;
     private int width = 1, height = 1;//image width and x value for aspect ration, image height and y value for aspect ration
     private ImageView ivImage;
-
     //UI variables
     private TextView tvHeading, tvMessage, tvCamera, tvGallery, tvRemove;
+    private LinearLayout llHeading,llMessage, llCancel,llRemove,rlButtons,llCamera,llGallery;
 
     //Image array
     private ImageView[] ivImageArr;
     private String[] pathToFileArr;
     private int[] widthArr, heightArr;//image width and x value for aspect ration, image height and y value for aspect ration
     //UI variables
-    private TextView[] tvHeadingArr, tvMessageArr, tvCameraArr, tvGalleryArr, tvRemoveArr;
+    private TextView[] tvHeadingArr, tvMessageArr,tvCameraArr, tvGalleryArr, tvRemoveArr;
+    private LinearLayout[] llHeadingArr,llMessageArr, llCancelArr,llRemoveArr,rlButtonsArr,llCameraArr,llGalleryArr;
 
     /**
      * Single picture constructor
@@ -125,6 +127,14 @@ public class UploadImage extends AppCompatActivity {
         tvGallery = myDialog.findViewById(R.id.tvGallery);
         tvRemove = myDialog.findViewById(R.id.tvRemove);
 
+        llCamera = myDialog.findViewById(R.id.llCamera);
+        llCancel = myDialog.findViewById(R.id.llCancel);
+        llGallery = myDialog.findViewById(R.id.llGallery);
+        llHeading = myDialog.findViewById(R.id.llHeading);
+        llMessage = myDialog.findViewById(R.id.llMessage);
+        llRemove = myDialog.findViewById(R.id.llRemove);
+        rlButtons = myDialog.findViewById(R.id.rlButtons);
+
         //Display "remove picture" option when there's an image
         if (ivImage.getDrawable() != null) {
             tvRemove.setVisibility(View.VISIBLE);
@@ -192,20 +202,28 @@ public class UploadImage extends AppCompatActivity {
 
         //Initialise variables
         TextView tvCancel = myDialog.findViewById(R.id.tvCancel);
-        tvHeading = myDialog.findViewById(R.id.tvHeading);
-        tvMessage = myDialog.findViewById(R.id.tvMessage);
-        tvCamera = myDialog.findViewById(R.id.tvCamera);
-        tvGallery = myDialog.findViewById(R.id.tvGallery);
-        tvRemove = myDialog.findViewById(R.id.tvRemove);
+        tvHeadingArr[index] = myDialog.findViewById(R.id.tvHeading);
+        tvMessageArr[index] = myDialog.findViewById(R.id.tvMessage);
+        tvCameraArr[index] = myDialog.findViewById(R.id.tvCamera);
+        tvGalleryArr[index] = myDialog.findViewById(R.id.tvGallery);
+        tvRemoveArr[index] = myDialog.findViewById(R.id.tvRemove);
+
+        llCameraArr[index] = myDialog.findViewById(R.id.llCamera);
+        llCancelArr[index] = myDialog.findViewById(R.id.llCancel);
+        llGalleryArr[index] = myDialog.findViewById(R.id.llGallery);
+        llHeadingArr[index] = myDialog.findViewById(R.id.llHeading);
+        llMessageArr[index] = myDialog.findViewById(R.id.llMessage);
+        llRemoveArr[index] = myDialog.findViewById(R.id.llRemove);
+        rlButtonsArr[index] = myDialog.findViewById(R.id.rlButtons);
 
         //Display "remove picture" option when there's an image
         if (ivImageArr[index].getDrawable() != null) {
-            tvRemove.setVisibility(View.VISIBLE);
+            tvRemoveArr[index].setVisibility(View.VISIBLE);
         } else {
-            tvRemove.setVisibility(View.GONE);
+            tvRemoveArr[index].setVisibility(View.GONE);
         }
 
-        tvRemove.setOnClickListener(new View.OnClickListener() {
+        tvRemoveArr[index].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ivImageArr[index].setImageDrawable(null);
@@ -220,7 +238,7 @@ public class UploadImage extends AppCompatActivity {
             }
         });
 
-        tvCamera.setOnClickListener(new View.OnClickListener() {
+        tvCameraArr[index].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (ContextCompat.checkSelfPermission(context,
@@ -235,7 +253,7 @@ public class UploadImage extends AppCompatActivity {
             }
         });
 
-        tvGallery.setOnClickListener(new View.OnClickListener() {
+        tvGalleryArr[index].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) ==
@@ -371,129 +389,129 @@ public class UploadImage extends AppCompatActivity {
     /**
      * Change the displayed text in the popup heading
      *
-     * @param text Takes string for heading
+     * @param textView Takes textView for heading
      */
-    public void setHeadingText(String text) {
-        tvHeading.setText(text);
+    public void setHeadingTextView(TextView textView) {
+        tvHeading=textView;
     }
 
     /**
      * Change the displayed text in the popup heading
      *
-     * @param text  Takes string for heading
+     * @param textView  Takes textView for heading
      * @param index index
      */
-    public void setHeadingText(String text, int index) {
-        tvHeadingArr[index].setText(text);
+    public void setHeadingTextView(TextView textView, int index) {
+        tvHeadingArr[index]=textView;
     }
 
     /**
      * @return text in Heading TextView
      */
-    public String getHeadingText() {
-        return tvHeading.getText().toString();
+    public TextView getHeadingTextView() {
+        return tvHeading;
     }
 
     /**
      * @param index index
      * @return text in Heading TextView
      */
-    public String getHeadingText(int index) {
-        return tvHeadingArr[index].getText().toString();
+    public TextView getHeadingTextView(int index) {
+        return tvHeadingArr[index];
     }
 
     /**
      * Change the displayed text in the popup message
      *
-     * @param text Takes string for message
+     * @param textView Takes textView for message
      */
-    public void setMessageText(String text) {
-        tvMessage.setText(text);
+    public void setMessageTextView(TextView textView) {
+        tvMessage=textView;
     }
 
     /**
      * Change the displayed text in the popup message
      *
-     * @param text  Takes string for message
+     * @param textView  Takes textView for message
      * @param index index
      */
-    public void setMessageText(String text, int index) {
-        tvMessageArr[index].setText(text);
+    public void setMessageTextView(TextView textView, int index) {
+        tvMessageArr[index]=textView;
     }
 
     /**
      * @return text in message TextView
      */
-    public String getMessageText() {
-        return tvMessage.getText().toString();
+    public TextView getMessageTextView() {
+        return tvMessage;
     }
 
     /**
      * @param index index
      * @return text in message TextView
      */
-    public String getMessageText(int index) {
-        return tvMessageArr[index].getText().toString();
+    public TextView getMessageTextView(int index) {
+        return tvMessageArr[index];
     }
 
     /**
      * Change the displayed text in the popup "open gallery" option
      *
-     * @param text Takes string for "open gallery" option
+     * @param textView Takes textView for "open gallery" option
      */
-    public void setGalleryText(String text) {
-        tvGallery.setText(text);
+    public void setGalleryTextView(TextView textView) {
+        tvGallery=textView;
     }
 
     /**
      * Change the displayed text in the popup "open gallery" option
      *
-     * @param text  Takes string for "open gallery" option
+     * @param textView  Takes textView for "open gallery" option
      * @param index index
      */
-    public void setGalleryText(String text, int index) {
-        tvGalleryArr[index].setText(text);
+    public void setGalleryTextView(TextView textView, int index) {
+        tvGalleryArr[index] = textView;
     }
 
     /**
      * @return text in "open gallery" TextView
      */
-    public String getGalleryText() {
-        return tvGallery.getText().toString();
+    public TextView getGalleryTextView() {
+        return tvGallery;
     }
 
     /**
      * @param index index
      * @return text in "open gallery" TextView
      */
-    public String getGalleryText(int index) {
-        return tvGalleryArr[index].getText().toString();
+    public TextView getGalleryTextView(int index) {
+        return tvGalleryArr[index];
     }
 
     /**
      * Change the displayed text in the popup "open camera" option
      *
-     * @param text Takes string for "open camera" option
+     * @param textView Takes textView for "open camera" option
      */
-    public void setCameraText(String text) {
-        tvCamera.setText(text);
+    public void setCameraTextView(TextView textView) {
+        tvCamera=textView;
     }
 
     /**
      * Change the displayed text in the popup "open camera" option
      *
-     * @param text Takes string for "open camera" option
+     * @param textView Takes textView for "open camera" option
      * @param index index
      */
-    public void setCameraText(String text, int index) {
-        tvCameraArr[index].setText(text);
+    public void setCameraTextView(TextView textView, int index) {
+        tvCameraArr[index]=textView;
     }
 
     /**
      * @return text in "open camera" TextView
      */
-    public String getCameraText() {
-        return tvCamera.getText().toString();
+    public TextView getCameraText() {
+        return tvCamera;
     }
 
     /**
@@ -501,34 +519,34 @@ public class UploadImage extends AppCompatActivity {
      * @param index index
      * @return text in "open camera" TextView
      */
-    public String getCameraText(int index) {
-        return tvCameraArr[index].getText().toString();
+    public TextView getCameraTextView(int index) {
+        return tvCameraArr[index];
     }
 
     /**
      * Change the displayed text in the popup "remove image" option
      *
-     * @param text Takes string for "remove image" option
+     * @param textView Takes textView for "remove image" option
      */
-    public void setRemoveText(String text) {
-        tvRemove.setText(text);
+    public void setRemoveTextView(TextView textView) {
+        tvRemove=textView;
     }
 
     /**
      * Change the displayed text in the popup "remove image" option
      *
-     * @param text Takes string for "remove image" option
+     * @param textView Takes textView for "remove image" option
      * @param index index
      */
-    public void setRemoveText(String text, int index) {
-        tvRemoveArr[index].setText(text);
+    public void setRemoveTextView(TextView textView, int index) {
+        tvRemoveArr[index]=textView;
     }
 
     /**
      * @return text in "remove image" TextView
      */
-    public String getRemoveText() {
-        return tvRemove.getText().toString();
+    public TextView getRemoveTextView() {
+        return tvRemove;
     }
 
     /**
@@ -536,8 +554,8 @@ public class UploadImage extends AppCompatActivity {
      * @param index index
      * @return text in "remove image" TextView
      */
-    public String getRemoveText(int index) {
-        return tvRemoveArr[index].getText().toString();
+    public TextView getRemoveTextView(int index) {
+        return tvRemoveArr[index];
     }
 
     /**
@@ -777,7 +795,7 @@ public class UploadImage extends AppCompatActivity {
     private void startCrop(File file, @NonNull Uri uri) {
         Log.d(TAG, "startCrop: Start crop");
         UCrop uCrop = UCrop.of(uri, Uri.fromFile(new File(file, "SampleCropImg.jpg")));
-        uCrop.withAspectRatio(width * 1000, height * 1000)
+        uCrop.withAspectRatio(width, height)
                 .withMaxResultSize(width * 1000, height * 1000)
                 .withOptions(getOptions())
                 .start(activity);
@@ -793,7 +811,7 @@ public class UploadImage extends AppCompatActivity {
     private void startCrop(File file, @NonNull Uri uri, int index) {
         Log.d(TAG, "startCrop: Start crop");
         UCrop uCrop = UCrop.of(uri, Uri.fromFile(new File(file, "SampleCropImg.jpg")));
-        uCrop.withAspectRatio(widthArr[index] * 1000, heightArr[index] * 1000)
+        uCrop.withAspectRatio(widthArr[index], heightArr[index])
                 .withMaxResultSize(widthArr[index] * 1000, heightArr[index] * 1000)
                 .withOptions(getOptions())
                 .start(activity);
@@ -814,4 +832,115 @@ public class UploadImage extends AppCompatActivity {
         return options;
     }
 
+    public LinearLayout getMessageBackground() {
+        return llMessage;
+    }
+
+    public void setMessageBackground(LinearLayout llMessage) {
+        this.llMessage = llMessage;
+    }
+
+    public LinearLayout getHeadingBackground() {
+        return llHeading;
+    }
+
+    public void setHeadingBackground(LinearLayout llHeading) {
+        this.llHeading = llHeading;
+    }
+
+    public LinearLayout getCancelBackground() {
+        return llCancel;
+    }
+
+    public void setCancelBackground(LinearLayout llCancel) {
+        this.llCancel = llCancel;
+    }
+
+    public LinearLayout getRemoveBackground() {
+        return llRemove;
+    }
+
+    public void setRemoveBackground(LinearLayout llRemove) {
+        this.llRemove = llRemove;
+    }
+
+    public LinearLayout getButtonsBackground() {
+        return rlButtons;
+    }
+
+    public void setButtonsBackground(LinearLayout rlButtons) {
+        this.rlButtons = rlButtons;
+    }
+
+    public LinearLayout getCameraBackground() {
+        return llCamera;
+    }
+
+    public void setCameraBackground(LinearLayout llCamera) {
+        this.llCamera = llCamera;
+    }
+
+    public LinearLayout getGalleryBackground() {
+        return llGallery;
+    }
+
+    public void setGalleryBackground(LinearLayout llGallery) {
+        this.llGallery = llGallery;
+    }
+
+    public LinearLayout[] getHeadingBackgroundArr() {
+        return llHeadingArr;
+    }
+
+    public void setHeadingBackgroundArr(LinearLayout[] llHeadingArr) {
+        this.llHeadingArr = llHeadingArr;
+    }
+
+    public LinearLayout[] getMessageBackgroundArr() {
+        return llMessageArr;
+    }
+
+    public void setMessageBackgroundArr(LinearLayout[] llMessageArr) {
+        this.llMessageArr = llMessageArr;
+    }
+
+    public LinearLayout[] getCancelBackgroundArr() {
+        return llCancelArr;
+    }
+
+    public void setCancelBackgroundArr(LinearLayout[] llCancelArr) {
+        this.llCancelArr = llCancelArr;
+    }
+
+    public LinearLayout[] getRemoveBackgroundArr() {
+        return llRemoveArr;
+    }
+
+    public void setRemoveBackgroundArr(LinearLayout[] llRemoveArr) {
+        this.llRemoveArr = llRemoveArr;
+    }
+
+    public LinearLayout[] getButtonsBackgroundArr() {
+        return rlButtonsArr;
+    }
+
+    public void setButtonsBackgroundArr(LinearLayout[] rlButtonsArr) {
+        this.rlButtonsArr = rlButtonsArr;
+    }
+
+    public LinearLayout[] getCameraBackgroundArr() {
+        return llCameraArr;
+    }
+
+    public void setCameraBackgroundArr(LinearLayout[] llCameraArr) {
+        this.llCameraArr = llCameraArr;
+    }
+
+    public LinearLayout[] getGalleryBackgroundArr() {
+        return llGalleryArr;
+    }
+
+    public void setGalleryBackgroundArr(LinearLayout[] llGalleryArr) {
+        this.llGalleryArr = llGalleryArr;
+    }
 }
