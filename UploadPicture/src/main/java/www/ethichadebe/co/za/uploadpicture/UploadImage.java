@@ -107,6 +107,13 @@ public class UploadImage extends AppCompatActivity {
         this.tvHeadingArr = new TextView[ivImageArr.length];
         this.tvMessageArr = new TextView[ivImageArr.length];
         this.tvRemoveArr = new TextView[ivImageArr.length];
+        this.llCameraArr = new LinearLayout[ivImageArr.length];
+        this.llCancelArr = new LinearLayout[ivImageArr.length];
+        this.llGalleryArr = new LinearLayout[ivImageArr.length];
+        this.llHeadingArr = new LinearLayout[ivImageArr.length];
+        this.llMessageArr = new LinearLayout[ivImageArr.length];
+        this.llRemoveArr = new LinearLayout[ivImageArr.length];
+        this.rlButtonsArr = new LinearLayout[ivImageArr.length];
         for (int i = 0; i < ivImageArr.length; i++) {
             widthArr[i] = 1;
             heightArr[i] = 1;
