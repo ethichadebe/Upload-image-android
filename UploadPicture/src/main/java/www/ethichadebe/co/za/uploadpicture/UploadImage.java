@@ -34,7 +34,7 @@ import java.io.IOException;
 
 public class UploadImage extends AppCompatActivity {
     //constants
-    public static final int CAMERA_PERMISSION = 12323, STORAGE_PERMISSION = 1243234;
+    public static final int CAMERA_PERMISSION = 2323, STORAGE_PERMISSION = 2434;
     private Activity activity;
     private Context context;
     private PackageManager packageManager;
